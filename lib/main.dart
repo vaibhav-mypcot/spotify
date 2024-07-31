@@ -9,8 +9,11 @@ import 'package:spotify/features/auth/signin/presentation/bloc/auth_bloc.dart';
 import 'package:spotify/features/dashboard/bottom_nav_pages/home/presentation/bloc/song_bloc/song_bloc.dart';
 import 'package:spotify/features/dashboard/bottom_nav_pages/home/presentation/bloc/tab_bloc/tabs_bloc.dart';
 import 'package:spotify/features/dashboard/presentation/bloc/bottom_nav_tab_bloc.dart';
+import 'package:spotify/features/music/presentation/bloc/song_player/song_player_bloc.dart';
 import 'package:spotify/firebase_options.dart';
 import 'package:spotify/init_dependencies.dart';
+
+import 'features/music/presentation/bloc/position/position_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +35,9 @@ void main() async {
       providers: [
         BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
         BlocProvider(create: (_) => serviceLocator<SongBloc>()),
+        BlocProvider(create: (_) => serviceLocator<SongPlayerBloc>()),
+        BlocProvider<PositionBloc>(
+            create: (BuildContext context) => PositionBloc()),
         BlocProvider<BottomNavTabBloc>(
             create: (BuildContext context) => BottomNavTabBloc()),
         BlocProvider<TabsBloc>(create: (BuildContext context) => TabsBloc()),

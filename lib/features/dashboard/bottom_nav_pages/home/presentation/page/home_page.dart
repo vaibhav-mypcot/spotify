@@ -46,7 +46,6 @@ class _HomePageState extends State<HomePage> {
             BlocBuilder<SongBloc, SongState>(
               builder: (context, state) {
                 if (state is SongSuccess) {
-                  
                   return Container(
                     margin: EdgeInsets.symmetric(horizontal: 24.w),
                     child: Stack(

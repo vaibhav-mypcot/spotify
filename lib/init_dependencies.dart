@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:spotify/features/auth/signin/data/datasource/auth_remote_data_source.dart';
 import 'package:spotify/features/auth/signin/data/repositories/auth_repository_imp.dart';
 import 'package:spotify/features/auth/signin/domain/repositories/auth_repository.dart';
@@ -10,12 +11,16 @@ import 'package:spotify/features/dashboard/bottom_nav_pages/home/data/repositori
 import 'package:spotify/features/dashboard/bottom_nav_pages/home/domain/repositories/song_repository.dart';
 import 'package:spotify/features/dashboard/bottom_nav_pages/home/domain/usecases/get_all_songs.dart';
 import 'package:spotify/features/dashboard/bottom_nav_pages/home/presentation/bloc/song_bloc/song_bloc.dart';
+import 'package:spotify/features/music/presentation/bloc/song_player/song_player_bloc.dart';
 
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
+ serviceLocator.registerSingleton<AudioPlayer>(AudioPlayer());
+
   _initAuth();
   _initHome();
+  _initMusic();
 }
 
 //-- register data source
@@ -86,6 +91,17 @@ void _initHome() {
     ..registerLazySingleton(
       () => SongBloc(
         getAllSongs: serviceLocator(),
+      ),
+    );
+}
+
+void _initMusic() {
+  serviceLocator
+
+    //-- bloc
+    ..registerLazySingleton(
+      () => SongPlayerBloc(
+        serviceLocator(),
       ),
     );
 }

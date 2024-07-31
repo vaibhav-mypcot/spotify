@@ -33,14 +33,10 @@ class TopAlbumsWidget extends StatelessWidget {
           },
           child: GestureDetector(
             onTap: () {
-              context.router.push(
-                MusicRoute(
-                    index: index,
-                    title:  topAlbums[index].title,
-                    artist: topAlbums[index].artist,
-                    imageUrl:
-                        '${Constatnts.appUrl}$formattedArtist$formattedTitle.png?${Constatnts.mediaAlt}'),
-              );
+              context.router.push(MusicRoute(
+                index: index,
+                songsList: topAlbums,
+              ));
             },
             child: Padding(
               padding: EdgeInsets.only(right: 14.h),
@@ -56,7 +52,7 @@ class TopAlbumsWidget extends StatelessWidget {
                     child: Stack(
                       children: [
                         Hero(
-                           tag: 'cover$index',
+                          tag: 'cover$index',
                           child: Container(
                             height: 184.h,
                             width: 146.h,

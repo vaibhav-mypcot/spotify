@@ -83,9 +83,7 @@ abstract class $AppRouter extends _i13.RootStackRouter {
         child: _i7.MusicPage(
           key: args.key,
           index: args.index,
-          imageUrl: args.imageUrl,
-          title: args.title,
-          artist: args.artist,
+          songsList: args.songsList,
         ),
       );
     },
@@ -216,18 +214,14 @@ class MusicRoute extends _i13.PageRouteInfo<MusicRouteArgs> {
   MusicRoute({
     _i14.Key? key,
     required int index,
-    required String imageUrl,
-    required String title,
-    required String artist,
+    required List<dynamic> songsList,
     List<_i13.PageRouteInfo>? children,
   }) : super(
           MusicRoute.name,
           args: MusicRouteArgs(
             key: key,
             index: index,
-            imageUrl: imageUrl,
-            title: title,
-            artist: artist,
+            songsList: songsList,
           ),
           initialChildren: children,
         );
@@ -242,24 +236,18 @@ class MusicRouteArgs {
   const MusicRouteArgs({
     this.key,
     required this.index,
-    required this.imageUrl,
-    required this.title,
-    required this.artist,
+    required this.songsList,
   });
 
   final _i14.Key? key;
 
   final int index;
 
-  final String imageUrl;
-
-  final String title;
-
-  final String artist;
+  final List<dynamic> songsList;
 
   @override
   String toString() {
-    return 'MusicRouteArgs{key: $key, index: $index, imageUrl: $imageUrl, title: $title, artist: $artist}';
+    return 'MusicRouteArgs{key: $key, index: $index, songsList: $songsList}';
   }
 }
 

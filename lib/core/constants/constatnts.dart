@@ -19,6 +19,9 @@ class Constatnts {
   static const String appleIC = 'assets/vectors/apple.svg';
   static const String searchIC = 'assets/vectors/search_ic.svg';
   static const String sideMenuIC = 'assets/vectors/side_menu_ic.svg';
+  static const String arrowIC = 'assets/vectors/previous_ic.svg';
+  static const String repeateIC = 'assets/vectors/repeate_ic.svg';
+  static const String shuffleIC = 'assets/vectors/shuffle_ic.svg';
 
   //-- Bottom Navigation icons
 
@@ -35,8 +38,13 @@ class Constatnts {
   static const String profileFillIc =
       'assets/vectors/bottom_nav/user_fill_ic.svg';
 
+
+  //-- Firebase URL
+
   static const appUrl =
       'https://firebasestorage.googleapis.com/v0/b/spotify-bff99.appspot.com/o/covers%2F';
+  static const songFirestorage =
+      'https://firebasestorage.googleapis.com/v0/b/spotify-bff99.appspot.com/o/songs%2F';
 
   static const mediaAlt = 'alt=media';
 }
