@@ -6,7 +6,9 @@ import 'package:spotify/core/theme/app_colors.dart';
 import 'package:spotify/core/theme/text_style.dart';
 
 class CommonAppBarWidget extends StatelessWidget {
-  const CommonAppBarWidget({super.key});
+  const CommonAppBarWidget({super.key, required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +16,10 @@ class CommonAppBarWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         BackButtonWidget(
-          onTap: () => context.router.back(),
+          onTap: () {},
         ),
         Text(
-          'Now Playing',
+          title,
           style: kTextStyleSatoshiBold600.copyWith(
             fontSize: 18.sp,
             color: kColorBlack,

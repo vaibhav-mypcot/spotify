@@ -14,7 +14,7 @@ class MyDraggableSheetWidget extends StatefulWidget {
 class __MyDraggableSheetWidgetState extends State<MyDraggableSheetWidget> {
   final _sheet = GlobalKey();
   final _controller = DraggableScrollableController();
-  bool _isCollapsed = true;
+  bool isOpen = false;
 
   @override
   void initState() {
@@ -28,17 +28,19 @@ class __MyDraggableSheetWidgetState extends State<MyDraggableSheetWidget> {
     if (currentSize <= 0.01) {
       _collapse();
     }
+
+    if (currentSize <= 0.0) {
+      setState(() {
+        isOpen = !isOpen;
+      });
+    }
   }
 
-  void _collapse() {
-    _animateSheet(sheet.snapSizes!.first);
-  }
+  void _collapse() => _animateSheet(sheet.snapSizes!.first);
 
   void _anchor() => _animateSheet(sheet.snapSizes!.last);
 
-  void _expand() {
-    _animateSheet(sheet.maxChildSize);
-  }
+  void _expand() => _animateSheet(sheet.maxChildSize);
 
   void _hide() => _animateSheet(sheet.minChildSize);
 
@@ -70,14 +72,14 @@ class __MyDraggableSheetWidgetState extends State<MyDraggableSheetWidget> {
         expand: true,
         snap: true,
         snapSizes: [
-          60 / constraints.maxHeight,
+          90 / constraints.maxHeight,
           1,
         ],
         controller: _controller,
         builder: (BuildContext context, ScrollController scrollController) {
           return DecoratedBox(
             decoration: const BoxDecoration(
-              color: kColorWhite,
+              color: kColorLightGrey,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
@@ -91,28 +93,29 @@ class __MyDraggableSheetWidgetState extends State<MyDraggableSheetWidget> {
                 // ),
                 SliverList.list(
                   children: [
-                    _isCollapsed
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              RotatedBox(
-                                quarterTurns: 3,
-                                child: Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  size: 24.h,
-                                  color: kColorBlack,
-                                ),
-                              ),
-                              Text(
-                                'Lyrics',
-                                style: kTextStyleSatoshiMedium500.copyWith(
-                                  fontSize: 16.sp,
-                                  color: kColorDarkGrey,
-                                ),
-                              ),
-                            ],
-                          )
-                        : const SizedBox(),
+                    Visibility(
+                      visible: !isOpen,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          RotatedBox(
+                            quarterTurns: 3,
+                            child: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 24.h,
+                              color: kColorBlack,
+                            ),
+                          ),
+                          Text(
+                            'Lyrics',
+                            style: kTextStyleSatoshiMedium500.copyWith(
+                              fontSize: 16.sp,
+                              color: kColorDarkGrey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ],

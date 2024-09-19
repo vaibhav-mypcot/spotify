@@ -6,7 +6,30 @@ import 'package:spotify/core/theme/app_colors.dart';
 import 'package:spotify/core/theme/text_style.dart';
 
 class AlbumCardWidget extends StatelessWidget {
-  const AlbumCardWidget({super.key});
+  AlbumCardWidget({
+    super.key,
+    required this.index,
+  });
+
+  final int index;
+
+  final bannerList = [
+    {
+      "albumName": "Cold Play",
+      "SingerName": "Justin Biber",
+      "card-color": "#F6FB7A",
+    },
+    {
+      "albumName": "Uptown Funk",
+      "SingerName": "Mark Ronson",
+      "card-color": "#91DDCF",
+    },
+    {
+      "albumName": "Shake it off",
+      "SingerName": "Taylor Swift",
+      "card-color": "#F6FB7A",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +44,7 @@ class AlbumCardWidget extends StatelessWidget {
             margin: EdgeInsets.only(top: 40.h),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30.r),
-              color: kColorPrimary,
+              color: Colors.red,
             ),
             child: Row(
               children: [
@@ -40,14 +63,14 @@ class AlbumCardWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Happier Than\nEver',
+                          bannerList[index]['albumName'].toString(),
                           style: kTextStyleSatoshiBold600.copyWith(
                             fontSize: 24.sp,
                             color: kColorWhite,
                           ),
                         ),
                         Text(
-                          'Billie Eilish',
+                          bannerList[index]['SingerName'].toString(),
                           style: kTextStyleSatoshiRegular400.copyWith(
                             fontSize: 16.sp,
                             color: kColorWhite,
@@ -74,7 +97,7 @@ class AlbumCardWidget extends StatelessWidget {
             alignment: Alignment.topRight,
             child: SizedBox(
               child: Image.asset(
-                Constatnts.homeArtist,
+                Constatnts.luffyPic,
                 fit: BoxFit.cover,
                 height: 172.h,
               ),

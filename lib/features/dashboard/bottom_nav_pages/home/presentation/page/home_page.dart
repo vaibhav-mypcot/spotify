@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,10 +23,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String index = "0";
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    remoteConfig.onConfigUpdated.listen((RemoteConfigUpdate event) async {
+      await remoteConfig.activate();
+      setState(() {
+        index = remoteConfig.getString("index");
+      });
+    });
     context.read<SongBloc>().add(SongFetchEvent());
   }
 
@@ -39,101 +49,110 @@ class _HomePageState extends State<HomePage> {
           }
         }),
       ],
-      child: Scaffold(
-        backgroundColor: kColorWhite,
-        body: Stack(
-          children: [
-            BlocBuilder<SongBloc, SongState>(
-              builder: (context, state) {
-                if (state is SongSuccess) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 24.w),
-                    child: Stack(
-                      // fit: StackFit.expand,
-                      children: [
-                        SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 60.h,
-                                margin: EdgeInsets.only(top: 26.h),
-                                child: const HomeHeaderWidget(),
-                              ),
-                              // SizedBox(height: 24.h),
-                              //-- Album Card
-                              const AlbumCardWidget(),
-                              SizedBox(height: 34.h),
-                              //-- Tabs
-                              SizedBox(
-                                height: 40.h,
-                                width: double.infinity,
-                                child: const TabListWidget(),
-                              ),
-                              SizedBox(height: 28.h),
-                              //-- Top Albums
-                              SizedBox(
-                                // height: 40.h,
-                                height: 250.h,
-                                width: double.infinity,
-                                child:  TopAlbumsWidget(
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: kColorWhite,
+          body: Stack(
+            children: [
+              BlocBuilder<SongBloc, SongState>(
+                builder: (context, state) {
+                  if (state is SongSuccess) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(horizontal: 24.w),
+                      child: Stack(
+                        // fit: StackFit.expand,
+                        children: [
+                          SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 60.h,
+                                  // margin: EdgeInsets.only(top: 0.h),
+                                  child: const HomeHeaderWidget(),
+                                ),
+                                // SizedBox(height: 24.h),
+                                //-- Album Card
+                                AlbumCardWidget(
+                                  index: int.parse(index),
+                                ),
+                                SizedBox(height: 34.h),
+                                //-- Tabs
+                                SizedBox(
+                                  height: 40.h,
+                                  width: double.infinity,
+                                  child: const TabListWidget(),
+                                ),
+                                SizedBox(height: 28.h),
+                                //-- Top Albums
+                                SizedBox(
+                                  // height: 40.h,
+                                  height: 250.h,
+                                  width: double.infinity,
+                                  child: TopAlbumsWidget(
+                                    topAlbums: state.data,
+                                  ),
+                                ),
+                                SizedBox(height: 36.h),
+                                //-- Playlist
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Paylist',
+                                      style: kTextStyleSatoshiBold600.copyWith(
+                                        fontSize: 20.sp,
+                                        color: kColorBlack,
+                                      ),
+                                    ),
+                                    Text(
+                                      'See More',
+                                      style:
+                                          kTextStyleSatoshiRegular400.copyWith(
+                                        fontSize: 12.sp,
+                                        color: kColorDarkGrey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 22.h),
+
+                                PlaylistCardWidget(
                                   topAlbums: state.data,
                                 ),
-                              ),
-                              SizedBox(height: 36.h),
-                              //-- Playlist
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Paylist',
-                                    style: kTextStyleSatoshiBold600.copyWith(
-                                      fontSize: 20.sp,
-                                      color: kColorBlack,
-                                    ),
-                                  ),
-                                  Text(
-                                    'See More',
-                                    style: kTextStyleSatoshiRegular400.copyWith(
-                                      fontSize: 12.sp,
-                                      color: kColorDarkGrey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const PlaylistCardWidget(),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        // Container(
-                        //   height: 230.h,
-                        //   margin: EdgeInsets.only(top: 12.h),
-                        //   // color: kColorGrey,
-                        //   width: double.infinity,
-                        //   alignment: Alignment.bottomRight,
-                        //   child: SizedBox(
-                        //     child: Image.asset(
-                        //       Constatnts.homeArtist,
-                        //       fit: BoxFit.cover,
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  );
+                          // Container(
+                          //   height: 230.h,
+                          //   margin: EdgeInsets.only(top: 12.h),
+                          //   // color: kColorGrey,
+                          //   width: double.infinity,
+                          //   alignment: Alignment.bottomRight,
+                          //   child: SizedBox(
+                          //     child: Image.asset(
+                          //       Constatnts.homeArtist,
+                          //       fit: BoxFit.cover,
+                          //     ),
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    );
+                  }
+
+                  return const SizedBox();
+                },
+              ),
+              BlocBuilder<SongBloc, SongState>(builder: (context, state) {
+                if (state is SongLoading) {
+                  return const LoaderWidget();
                 }
 
                 return const SizedBox();
-              },
-            ),
-            BlocBuilder<SongBloc, SongState>(builder: (context, state) {
-              if (state is SongLoading) {
-                return const LoaderWidget();
-              }
-
-              return const SizedBox();
-            })
-          ],
+              })
+            ],
+          ),
         ),
       ),
     );

@@ -9,7 +9,9 @@ class LoadSong extends SongPlayerEvent {
   LoadSong(this.artist, this.title);
 }
 
-class PlayOrPauseSong extends SongPlayerEvent {}
+class PlayOrPauseSong extends SongPlayerEvent {
+
+}
 
 class UpdateSongPlayer extends SongPlayerEvent {}
 

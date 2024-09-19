@@ -7,7 +7,9 @@ import 'package:spotify/core/theme/text_style.dart';
 import 'package:spotify/features/dashboard/bottom_nav_pages/home/presentation/bloc/song_bloc/song_bloc.dart';
 
 class PlaylistCardWidget extends StatelessWidget {
-  const PlaylistCardWidget({super.key});
+  const PlaylistCardWidget({super.key, required this.topAlbums});
+
+  final List topAlbums;
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +19,13 @@ class PlaylistCardWidget extends StatelessWidget {
           return ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
+              reverse: true,
               itemCount: state.data.length,
               itemBuilder: (context, index) {
+                String formattedArtist =
+                    topAlbums[index].artist.replaceAll(' ', '_');
+                String formattedTitle =
+                    topAlbums[index].title.replaceAll(' ', '_');
                 return Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 16.h),
                   child: Row(
@@ -26,11 +33,22 @@ class PlaylistCardWidget extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Image.asset(
-                            Constatnts.playButton,
-                            fit: BoxFit.cover,
-                            height: 34.h,
-                            width: 34.w,
+                          // Image.asset(
+                          //   Constatnts.playButton,
+                          //   fit: BoxFit.cover,
+                          //   height: 34.h,
+                          //   width: 34.w,
+                          // ),
+                          Container(
+                            height: 80.h,
+                            width: 80.h,
+                            decoration: BoxDecoration(
+                                color: kColorPrimary,
+                                borderRadius: BorderRadius.circular(30.r),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        '${Constatnts.appUrl}$formattedArtist$formattedTitle.png?${Constatnts.mediaAlt}'))),
                           ),
                           SizedBox(width: 24.w),
                           Column(

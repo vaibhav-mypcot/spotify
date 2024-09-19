@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:spotify/core/constants/constatnts.dart';
 import 'package:spotify/core/utils/utils.dart';
 
@@ -9,13 +10,16 @@ part 'song_player_state.dart';
 
 class SongPlayerBloc extends Bloc<SongPlayerEvent, SongPlayerState> {
   final AudioPlayer audioPlayer;
+
   Duration songDuration = Duration.zero;
   Duration songPosition = Duration.zero;
 
   bool isRepeatClicked = false;
   bool isShuffleClicked = false;
 
-  SongPlayerBloc(this.audioPlayer) : super(SongPlayerLoading()) {
+  SongPlayerBloc(
+    this.audioPlayer,
+  ) : super(SongPlayerLoading()) {
     on<LoadSong>(_onLoadSong);
     on<PlayOrPauseSong>(_onPlayOrPauseSong);
     on<UpdateSongPlayer>(_onUpdatePosition);
@@ -83,7 +87,20 @@ class SongPlayerBloc extends Bloc<SongPlayerEvent, SongPlayerState> {
     String url =
         '${Constatnts.songFirestorage}${event.artist}${event.title}.mp3?${Constatnts.mediaAlt}';
     try {
-      await audioPlayer.setUrl(url);
+      await audioPlayer.setUrl(
+        url,
+        tag: MediaItem(
+          // Specify a unique ID for each media item:
+          id: '1',
+          // Metadata to display in the notification:
+          album: event.title,
+          title: event.artist,
+          artUri: Uri.parse(
+              '${Constatnts.appUrl}${event.artist}${event.title}.png?${Constatnts.mediaAlt}'),
+        ),
+      );
+
+      // _showNotification(event.title, event.artist);
       emit(SongPlayerLoaded(
         songDuration: songDuration,
         songPosition: songPosition,
@@ -100,6 +117,7 @@ class SongPlayerBloc extends Bloc<SongPlayerEvent, SongPlayerState> {
       audioPlayer.stop();
     } else {
       audioPlayer.play();
+      //  _showNotification(event.title, event.artist);
     }
     emit(SongPlayerLoaded(
       songDuration: songDuration,
@@ -117,11 +135,6 @@ class SongPlayerBloc extends Bloc<SongPlayerEvent, SongPlayerState> {
       isPlaying: audioPlayer.playing,
     ));
   }
-
-  // _onSkeepToNextPreviousSongEvent(
-  //     SkeepToNextPreviousSongEvent event, Emitter<SongPlayerState> emit) {
-  //   emit(SkeepToNextPreviousSongState(event.indexPosition));
-  // }
 
   @override
   Future<void> close() {

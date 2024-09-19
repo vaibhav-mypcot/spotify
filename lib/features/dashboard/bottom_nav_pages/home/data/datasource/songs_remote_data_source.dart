@@ -4,6 +4,10 @@ import 'package:spotify/features/dashboard/bottom_nav_pages/home/data/model/song
 
 abstract interface class SongsRemoteDataSource {
   Future<List<SongModel>> getNewsSongs();
+  Future<String> updateFavoriteSong({
+    required String songId,
+    required bool favorite,
+  });
   // Future<Either> getPlayList();
   // Future<Either> addOrRemoveFavoriteSong(String songId);
   // Future<bool> isFavoriteSong(String songId);
@@ -27,4 +31,34 @@ class SongRemoteDataSourceImpl implements SongsRemoteDataSource {
       throw ServerException(e.toString());
     }
   }
+
+  @override
+  Future<String> updateFavoriteSong(
+      {required String songId, required bool favorite}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('songs')
+          .doc(songId)
+          .update({'isFavorite': favorite});
+
+      return 'success';
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  // @override
+  // Future<String> updateFavoriteSong({
+  //   required
+  // }) async{
+  //   try {
+  //     await FirebaseFirestore.instance
+  //       .collection('songs')
+  //       .doc(doc.id)
+  //       .update({'isFavorite': true});
+
+  //   } catch (e) {
+  //     throw ServerException(e.toString());
+  //   }
+  // }
 }

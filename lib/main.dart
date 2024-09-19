@@ -1,27 +1,73 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:spotify/core/routes/app_router.dart';
+import 'package:spotify/core/services/dynamic_link_service.dart';
+import 'package:spotify/core/services/firebase_cloud_messaging.dart';
 import 'package:spotify/core/theme/app_colors.dart';
 import 'package:spotify/features/auth/signin/presentation/bloc/auth_bloc.dart';
+import 'package:spotify/features/dashboard/bottom_nav_pages/home/presentation/bloc/favroite_song_bloc/favroite_song_bloc.dart';
 import 'package:spotify/features/dashboard/bottom_nav_pages/home/presentation/bloc/song_bloc/song_bloc.dart';
 import 'package:spotify/features/dashboard/bottom_nav_pages/home/presentation/bloc/tab_bloc/tabs_bloc.dart';
 import 'package:spotify/features/dashboard/presentation/bloc/bottom_nav_tab_bloc.dart';
 import 'package:spotify/features/music/presentation/bloc/song_player/song_player_bloc.dart';
 import 'package:spotify/firebase_options.dart';
 import 'package:spotify/init_dependencies.dart';
-
 import 'features/music/presentation/bloc/position/position_bloc.dart';
 
-void main() async {
+// MyAudioHandler audioHandler = MyAudioHandler();
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await initDependencies();
 
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+    androidNotificationChannelName: 'Audio playback',
+    androidNotificationOngoing: true,
+  );
+
+  //--- Push Notification Setup ---//
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+    provisional: false,
+  );
+  await FirebaseMessaging.instance.requestPermission();
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  FirebaseCloudMessaging firebaseCloudMessaging = FirebaseCloudMessaging();
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  await firebaseCloudMessaging.setupFlutterNotifications();
+  await firebaseCloudMessaging.getFirebaseNotification();
+
+  DynamicLinkService().initDynamicLink();
+
+  //---------------- End ------------------------ //
+
+  //-----DeepLink---------------------------------------------------------------- //
+  // DynamicLinkService dynamicLinkService = DynamicLinkService();
+  // dynamicLinkService.createLink("dsf4rf4ger").then((value) {
+  //   Share.share(value);
+  // });
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: kColorTransparent,
@@ -35,6 +81,7 @@ void main() async {
       providers: [
         BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
         BlocProvider(create: (_) => serviceLocator<SongBloc>()),
+        BlocProvider(create: (_) => serviceLocator<FavroiteSongBloc>()),
         BlocProvider(create: (_) => serviceLocator<SongPlayerBloc>()),
         BlocProvider<PositionBloc>(
             create: (BuildContext context) => PositionBloc()),
@@ -47,15 +94,25 @@ void main() async {
   );
 }
 
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    AppRouter appRouter = AppRouter();
+    final appRouter = serviceLocator<AppRouter>();
+
     return ScreenUtilInit(
-      designSize: const Size(390, 849),
+      designSize: const Size(360, 800),
       minTextAdapt: true,
       splitScreenMode: true,
       ensureScreenSize: true,

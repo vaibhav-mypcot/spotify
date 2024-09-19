@@ -8,4 +8,6 @@ final class SkeepToNextPreviousSongEvent extends PositionEvent {
   SkeepToNextPreviousSongEvent(this.indexPosition);
 }
 
+final class ResetPositionEvent extends PositionEvent {}
+
 // class RepeatClickedEvent extends PositionEvent {}

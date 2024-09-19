@@ -31,11 +31,30 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           page: DashboardRoute.page,
-          initial: true,
+          // initial: true,
         ),
         AutoRoute(
           page: MusicRoute.page,
           // initial: true,
+        ),
+        AutoRoute(
+          page: CuponsRoute.page,
+        ),
+        AutoRoute(
+          page: CuponDetailRoute.page,
+        ),
+        AutoRoute(
+          page: FavouriteRoute.page,
+        ),
+        AutoRoute(
+          page: FavoritesSongsRoute.page,
+        ),
+        AutoRoute(
+          page: ProductHomeRoute.page,
+        ),
+        AutoRoute(
+          page: ProductDetailsRoute.page,
+          initial: true,
         ),
       ];
 }

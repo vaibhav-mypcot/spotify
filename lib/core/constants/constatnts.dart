@@ -6,6 +6,8 @@ class Constatnts {
   static const String homeArtist = 'assets/images/home_artist.png';
   static const String introBg = 'assets/images/intro_bg.png';
   static const String playButton = 'assets/images/play_button.png';
+  static const String profilePic = 'assets/images/profile_pic.png';
+  static const String luffyPic = 'assets/images/luffy.png';
 
   //-- Vectors
 
@@ -37,7 +39,6 @@ class Constatnts {
       'assets/vectors/bottom_nav/heart_fill_ic.svg';
   static const String profileFillIc =
       'assets/vectors/bottom_nav/user_fill_ic.svg';
-
 
   //-- Firebase URL
 

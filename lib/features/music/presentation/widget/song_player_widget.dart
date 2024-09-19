@@ -56,11 +56,6 @@ class _SongPlayerWidgetState extends State<SongPlayerWidget> {
               ),
             );
       } else if (state is RepeatSongActiveState) {
-        // if (widget.position == 0) {
-        //   widget.position = widget.listLength - 1;
-        // } else {
-        //   widget.position = widget.position! - 1;
-        // }
         context
             .read<PositionBloc>()
             .add(SkeepToNextPreviousSongEvent(widget.position!));
@@ -166,7 +161,9 @@ class _SongPlayerWidgetState extends State<SongPlayerWidget> {
                     ),
                     SizedBox(width: 40.h),
                     GestureDetector(
-                      onTap: () => songPlayerBloc.add(PlayOrPauseSong()),
+                      onTap: () => songPlayerBloc.add(PlayOrPauseSong(
+                        
+                      )),
                       child: Container(
                         height: 60.h,
                         width: 60.w,

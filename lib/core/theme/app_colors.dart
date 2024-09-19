@@ -9,3 +9,6 @@ const kColorBlack= Color(0xff383838);
 const kColorDarkGrey = Color(0xff343434);
 const kColorTransparent = Colors.transparent;
 const kColorWhite = Color(0xffF2F2F2);
+
+const purple = Color.fromRGBO(128, 44, 110, 1);
+const cardColor = Color(0xFFE3DFFD);

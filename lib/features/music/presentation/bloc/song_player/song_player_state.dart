@@ -19,26 +19,8 @@ final class SongPlayerLoaded extends SongPlayerState {
   });
 }
 
-class ShuffleSongActiveState extends SongPlayerState {
-}
+class ShuffleSongActiveState extends SongPlayerState {}
 
-class RepeatSongActiveState extends SongPlayerState {
-}
-
-
-// class SkeepToNextPreviousSongState extends SongPlayerState {
-//   int indexPosition;
-//   SkeepToNextPreviousSongState(this.indexPosition);
-// }
-
-// class SkeepToNextSongState extends SongPlayerState {
-//   int indexPosition;
-//   SkeepToNextSongState(this.indexPosition);
-// }
-
-// class SkeepToPreviousState extends SongPlayerState {
-//   int indexPosition;
-//   SkeepToPreviousState(this.indexPosition);
-// }
+class RepeatSongActiveState extends SongPlayerState {}
 
 final class SongPlayerFailure extends SongPlayerState {}
