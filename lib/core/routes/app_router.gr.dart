@@ -45,132 +45,6 @@ import 'package:spotify/features/products/home/presentation/pages/product_home_p
 import 'package:spotify/features/splash/presentation/pages/splash_page.dart'
     as _i17;
 
-abstract class $AppRouter extends _i18.RootStackRouter {
-  $AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, _i18.PageFactory> pagesMap = {
-    AccessRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i1.AccessPage(),
-      );
-    },
-    CuponDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<CuponDetailRouteArgs>();
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i2.CuponDetailPage(
-          key: args.key,
-          id: args.id,
-          name: args.name,
-        ),
-      );
-    },
-    CuponsRoute.name: (routeData) {
-      final args = routeData.argsAs<CuponsRouteArgs>(
-          orElse: () => const CuponsRouteArgs());
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i3.CuponsPage(key: args.key),
-      );
-    },
-    DashboardRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.DashboardPage(),
-      );
-    },
-    DiscoverRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i5.DiscoverPage(),
-      );
-    },
-    FavoritesSongsRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i6.FavoritesSongsPage(),
-      );
-    },
-    FavouriteRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i7.FavouritePage(),
-      );
-    },
-    HomeRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i8.HomePage(),
-      );
-    },
-    IntermidiateRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i9.IntermidiatePage(),
-      );
-    },
-    MusicRoute.name: (routeData) {
-      final args = routeData.argsAs<MusicRouteArgs>();
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i10.MusicPage(
-          key: args.key,
-          index: args.index,
-          songsList: args.songsList,
-        ),
-      );
-    },
-    OnboardingRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i11.OnboardingPage(),
-      );
-    },
-    ProductDetailsRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i12.ProductDetailsPage(),
-      );
-    },
-    ProductHomeRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i13.ProductHomePage(),
-      );
-    },
-    ProfileRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i14.ProfilePage(),
-      );
-    },
-    SigninRoute.name: (routeData) {
-      final args = routeData.argsAs<SigninRouteArgs>(
-          orElse: () => const SigninRouteArgs());
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i15.SigninPage(key: args.key),
-      );
-    },
-    SignupRoute.name: (routeData) {
-      final args = routeData.argsAs<SignupRouteArgs>(
-          orElse: () => const SignupRouteArgs());
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i16.SignupPage(key: args.key),
-      );
-    },
-    SplashRoute.name: (routeData) {
-      return _i18.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i17.SplashPage(),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [_i1.AccessPage]
 class AccessRoute extends _i18.PageRouteInfo<void> {
@@ -182,7 +56,12 @@ class AccessRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'AccessRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i1.AccessPage();
+    },
+  );
 }
 
 /// generated route for
@@ -205,8 +84,17 @@ class CuponDetailRoute extends _i18.PageRouteInfo<CuponDetailRouteArgs> {
 
   static const String name = 'CuponDetailRoute';
 
-  static const _i18.PageInfo<CuponDetailRouteArgs> page =
-      _i18.PageInfo<CuponDetailRouteArgs>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CuponDetailRouteArgs>();
+      return _i2.CuponDetailPage(
+        key: args.key,
+        id: args.id,
+        name: args.name,
+      );
+    },
+  );
 }
 
 class CuponDetailRouteArgs {
@@ -242,8 +130,14 @@ class CuponsRoute extends _i18.PageRouteInfo<CuponsRouteArgs> {
 
   static const String name = 'CuponsRoute';
 
-  static const _i18.PageInfo<CuponsRouteArgs> page =
-      _i18.PageInfo<CuponsRouteArgs>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      final args =
+          data.argsAs<CuponsRouteArgs>(orElse: () => const CuponsRouteArgs());
+      return _i3.CuponsPage(key: args.key);
+    },
+  );
 }
 
 class CuponsRouteArgs {
@@ -268,7 +162,12 @@ class DashboardRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'DashboardRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i4.DashboardPage();
+    },
+  );
 }
 
 /// generated route for
@@ -282,7 +181,12 @@ class DiscoverRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'DiscoverRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i5.DiscoverPage();
+    },
+  );
 }
 
 /// generated route for
@@ -296,7 +200,12 @@ class FavoritesSongsRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'FavoritesSongsRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i6.FavoritesSongsPage();
+    },
+  );
 }
 
 /// generated route for
@@ -310,7 +219,12 @@ class FavouriteRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'FavouriteRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i7.FavouritePage();
+    },
+  );
 }
 
 /// generated route for
@@ -324,7 +238,12 @@ class HomeRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'HomeRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i8.HomePage();
+    },
+  );
 }
 
 /// generated route for
@@ -338,7 +257,12 @@ class IntermidiateRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'IntermidiateRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i9.IntermidiatePage();
+    },
+  );
 }
 
 /// generated route for
@@ -361,8 +285,17 @@ class MusicRoute extends _i18.PageRouteInfo<MusicRouteArgs> {
 
   static const String name = 'MusicRoute';
 
-  static const _i18.PageInfo<MusicRouteArgs> page =
-      _i18.PageInfo<MusicRouteArgs>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<MusicRouteArgs>();
+      return _i10.MusicPage(
+        key: args.key,
+        index: args.index,
+        songsList: args.songsList,
+      );
+    },
+  );
 }
 
 class MusicRouteArgs {
@@ -395,7 +328,12 @@ class OnboardingRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'OnboardingRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i11.OnboardingPage();
+    },
+  );
 }
 
 /// generated route for
@@ -409,7 +347,12 @@ class ProductDetailsRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'ProductDetailsRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i12.ProductDetailsPage();
+    },
+  );
 }
 
 /// generated route for
@@ -423,7 +366,12 @@ class ProductHomeRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'ProductHomeRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i13.ProductHomePage();
+    },
+  );
 }
 
 /// generated route for
@@ -437,7 +385,12 @@ class ProfileRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'ProfileRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i14.ProfilePage();
+    },
+  );
 }
 
 /// generated route for
@@ -454,8 +407,14 @@ class SigninRoute extends _i18.PageRouteInfo<SigninRouteArgs> {
 
   static const String name = 'SigninRoute';
 
-  static const _i18.PageInfo<SigninRouteArgs> page =
-      _i18.PageInfo<SigninRouteArgs>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      final args =
+          data.argsAs<SigninRouteArgs>(orElse: () => const SigninRouteArgs());
+      return _i15.SigninPage(key: args.key);
+    },
+  );
 }
 
 class SigninRouteArgs {
@@ -483,8 +442,14 @@ class SignupRoute extends _i18.PageRouteInfo<SignupRouteArgs> {
 
   static const String name = 'SignupRoute';
 
-  static const _i18.PageInfo<SignupRouteArgs> page =
-      _i18.PageInfo<SignupRouteArgs>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      final args =
+          data.argsAs<SignupRouteArgs>(orElse: () => const SignupRouteArgs());
+      return _i16.SignupPage(key: args.key);
+    },
+  );
 }
 
 class SignupRouteArgs {
@@ -509,5 +474,10 @@ class SplashRoute extends _i18.PageRouteInfo<void> {
 
   static const String name = 'SplashRoute';
 
-  static const _i18.PageInfo<void> page = _i18.PageInfo<void>(name);
+  static _i18.PageInfo page = _i18.PageInfo(
+    name,
+    builder: (data) {
+      return const _i17.SplashPage();
+    },
+  );
 }
