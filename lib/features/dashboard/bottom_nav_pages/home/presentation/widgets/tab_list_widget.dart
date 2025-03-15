@@ -10,7 +10,7 @@ class TabListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List tabs = ['Popp', 'Bollywoodp', 'Artistsp', 'Podcastsp'];
+    List tabs = ['Pop', 'Bollywood', 'Artists', 'Podcasts'];
     return BlocBuilder<TabsBloc, TabsState>(
       builder: (context, state) {
         if (state is TabsInitial) {

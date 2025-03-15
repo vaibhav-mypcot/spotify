@@ -1,0 +1,2 @@
+D:/Vaibhav/spotify/android/app/.cxx/Debug/6u1s6526/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Vaibhav/spotify/android/app/.cxx/Debug/6u1s6526/armeabi-v7a/CMakeFiles/rebuild_cache.dir

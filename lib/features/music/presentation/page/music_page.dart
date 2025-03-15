@@ -132,11 +132,9 @@ class _MusicPageState extends State<MusicPage> {
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
                                   return Text('Error: ${snapshot.error}');
-                                }
-
-                                if (!snapshot.hasData ||
+                                } else if (!snapshot.hasData ||
                                     !snapshot.data!.exists) {
-                                  return Text('Document does not exist');
+                                  return const SizedBox();
                                 }
 
                                 // Access the 'isFavorite' field from the document
@@ -171,31 +169,31 @@ class _MusicPageState extends State<MusicPage> {
                       ),
                       // _songPlayer(context, widget.index),
                       SizedBox(height: 50.h),
-                      GestureDetector(
-                        onTap: () {
-                          showModelBottomSheet(context,
-                              '${Constatnts.appUrl}$formattedArtist$formattedTitle.png?${Constatnts.mediaAlt}');
-                        },
-                        child: Column(
-                          children: [
-                            RotatedBox(
-                              quarterTurns: 3,
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 24.h,
-                                color: kColorBlack,
-                              ),
-                            ),
-                            Text(
-                              'Lyrics',
-                              style: kTextStyleSatoshiMedium500.copyWith(
-                                fontSize: 16.sp,
-                                color: kColorDarkGrey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     showModelBottomSheet(context,
+                      //         '${Constatnts.appUrl}$formattedArtist$formattedTitle.png?${Constatnts.mediaAlt}');
+                      //   },
+                      //   child: Column(
+                      //     children: [
+                      //       RotatedBox(
+                      //         quarterTurns: 3,
+                      //         child: Icon(
+                      //           Icons.arrow_forward_ios_rounded,
+                      //           size: 24.h,
+                      //           color: kColorBlack,
+                      //         ),
+                      //       ),
+                      //       Text(
+                      //         'Lyrics',
+                      //         style: kTextStyleSatoshiMedium500.copyWith(
+                      //           fontSize: 16.sp,
+                      //           color: kColorDarkGrey,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

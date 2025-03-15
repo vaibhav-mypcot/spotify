@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                                 // SizedBox(height: 24.h),
                                 //-- Album Card
                                 AlbumCardWidget(
-                                  index: int.parse(index),
+                              
                                 ),
                                 SizedBox(height: 34.h),
                                 //-- Tabs

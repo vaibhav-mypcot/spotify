@@ -45,10 +45,10 @@ class AccessPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 36.h),
-                  Container(
-                      width: double.infinity,
-                      alignment: Alignment.topLeft,
-                      child: BackButtonWidget(onTap: () {})),
+                  // Container(
+                  //     width: double.infinity,
+                  //     alignment: Alignment.topLeft,
+                  //     child: BackButtonWidget(onTap: () {})),
                   SizedBox(height: 100.h),
                   SvgPicture.asset(
                     Constatnts.spotifyLogo,
@@ -88,7 +88,7 @@ class AccessPage extends StatelessWidget {
                       SizedBox(width: 28.sp),
                       Expanded(
                         child: SolidButtonWidget(
-                          onTap: () => context.router.push( SigninRoute()),
+                          onTap: () => context.router.push(SigninRoute()),
                           height: 60.h,
                           labelColor: kColorLightGrey,
                           fontSize: 18,

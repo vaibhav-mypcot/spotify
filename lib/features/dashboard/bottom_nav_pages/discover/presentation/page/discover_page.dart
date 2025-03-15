@@ -48,27 +48,27 @@ class DiscoverPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 18.h),
-                Expanded(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 14.0,
-                      mainAxisSpacing: 18.0,
-                    ),
-                    itemCount: 12,
-                    shrinkWrap: true,
-                    itemBuilder: (ctx, index) {
-                      return Container(
-                        height: 20.h,
-                        width: 50.w,
-                        decoration: BoxDecoration(
-                            color: kColorGrey,
-                            borderRadius: BorderRadius.circular(8.r)),
-                      );
-                    },
-                  ),
-                )
+                // Expanded(
+                //   child: GridView.builder(
+                //     gridDelegate:
+                //         const SliverGridDelegateWithFixedCrossAxisCount(
+                //       crossAxisCount: 2,
+                //       crossAxisSpacing: 14.0,
+                //       mainAxisSpacing: 18.0,
+                //     ),
+                //     itemCount: 12,
+                //     shrinkWrap: true,
+                //     itemBuilder: (ctx, index) {
+                //       return Container(
+                //         height: 20.h,
+                //         width: 50.w,
+                //         decoration: BoxDecoration(
+                //             color: kColorGrey,
+                //             borderRadius: BorderRadius.circular(8.r)),
+                //       );
+                //     },
+                //   ),
+                // )
               ],
             ),
           )),

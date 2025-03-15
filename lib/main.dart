@@ -1,15 +1,12 @@
 import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:spotify/core/routes/app_router.dart';
-import 'package:spotify/core/services/dynamic_link_service.dart';
-import 'package:spotify/core/services/firebase_cloud_messaging.dart';
 import 'package:spotify/core/theme/app_colors.dart';
 import 'package:spotify/features/auth/signin/presentation/bloc/auth_bloc.dart';
 import 'package:spotify/features/dashboard/bottom_nav_pages/home/presentation/bloc/favroite_song_bloc/favroite_song_bloc.dart';
@@ -19,47 +16,54 @@ import 'package:spotify/features/dashboard/presentation/bloc/bottom_nav_tab_bloc
 import 'package:spotify/features/music/presentation/bloc/song_player/song_player_bloc.dart';
 import 'package:spotify/firebase_options.dart';
 import 'package:spotify/init_dependencies.dart';
+import 'package:spotify/notification_service.dart';
 import 'features/music/presentation/bloc/position/position_bloc.dart';
 
 // MyAudioHandler audioHandler = MyAudioHandler();
-
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await initDependencies();
-
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
-    androidNotificationChannelName: 'Audio playback',
-    androidNotificationOngoing: true,
-  );
-
-  //--- Push Notification Setup ---//
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  await messaging.requestPermission(
-    alert: true,
-    badge: true,
-    sound: true,
-    provisional: false,
-  );
-  await FirebaseMessaging.instance.requestPermission();
+  await Future.wait([
+    initDependencies(),
+    JustAudioBackground.init(
+      androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+      androidNotificationChannelName: 'Audio playback',
+      androidNotificationOngoing: true,
+    ),
+    NotificationService.instance.initialize(),
+  ]);
 
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
+  //--- Push Notification Setup ---//
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
 
-  FirebaseCloudMessaging firebaseCloudMessaging = FirebaseCloudMessaging();
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  await firebaseCloudMessaging.setupFlutterNotifications();
-  await firebaseCloudMessaging.getFirebaseNotification();
+  // FirebaseMessaging messaging = FirebaseMessaging.instance;
+  // await messaging.requestPermission(
+  //   alert: true,
+  //   badge: true,
+  //   sound: true,
+  //   provisional: false,
+  // );
 
-  DynamicLinkService().initDynamicLink();
+  // await FirebaseMessaging.instance.requestPermission();
+
+  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+  //   alert: true,
+  //   badge: true,
+  //   sound: true,
+  // );
+
+  // FirebaseCloudMessaging firebaseCloudMessaging = FirebaseCloudMessaging();
+  // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  // await firebaseCloudMessaging.setupFlutterNotifications();
+  // await firebaseCloudMessaging.getFirebaseNotification();
+
+  // DynamicLinkService().initDynamicLink();
 
   //---------------- End ------------------------ //
 
@@ -94,17 +98,14 @@ Future<void> main() async {
   );
 }
 
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.messageId}");
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-}
+// @pragma('vm:entry-point')
+// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   print("Handling a background message: ${message.messageId}");
+//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  static final GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>();
 
   // This widget is the root of your application.
   @override
@@ -118,6 +119,7 @@ class MyApp extends StatelessWidget {
       ensureScreenSize: true,
       useInheritedMediaQuery: true,
       child: MaterialApp.router(
+        key: navigatorKey,
         routerConfig: appRouter.config(),
         title: 'Spotify',
         debugShowCheckedModeBanner: false,

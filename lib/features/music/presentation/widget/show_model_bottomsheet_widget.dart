@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void showModelBottomSheet(BuildContext context, String imgUrl) {
   showModalBottomSheet(
@@ -7,6 +8,7 @@ void showModelBottomSheet(BuildContext context, String imgUrl) {
       context: context,
       builder: (context) {
         return Container(
+          height: 100.h,
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(

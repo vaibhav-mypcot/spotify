@@ -50,9 +50,9 @@ dependencies:
   shimmer: ^3.0.0
   just_audio: ^0.9.39
   # audio_service: ^0.18.15
-  flutter_local_notifications: ^17.2.1+2
+  flutter_local_notifications: ^18.0.1
   just_audio_background: ^0.0.1-beta.13
-  firebase_messaging: ^15.1.0
+  firebase_messaging: ^15.2.2
   firebase_dynamic_links: ^6.0.5
   share_plus: ^10.0.0
   firebase_analytics: ^11.3.0

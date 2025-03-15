@@ -11,7 +11,7 @@ import 'package:spotify/init_dependencies.dart';
 import 'package:spotify/main.dart';
 
 class FirebaseCloudMessaging {
-  final ctx = MyApp.navigatorKey.currentContext;
+  // final ctx = MyApp.navigatorKey.currentContext;
 
   // It is assumed that all messages contain a data field with the key 'type'
   Future<void> setupInteractedMessage() async {
@@ -80,6 +80,8 @@ class FirebaseCloudMessaging {
     //For Foreground Notifications
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("Show flutter notificcation");
+      print("Show flutter notificcation : ${message.data.length}");
+
       showFlutterNotification(message);
 
       print("remote message data ${message.data}");
@@ -147,17 +149,19 @@ class FirebaseCloudMessaging {
     /// done later
     final DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(
-            requestAlertPermission: true,
-            requestBadgePermission: true,
-            requestSoundPermission: true,
-            onDidReceiveLocalNotification: (
-              int id,
-              String? title,
-              String? body,
-              String? payload,
-            ) async {
-              print('here is payload ---> $payload');
-            });
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+      // onDidReceiveLocalNotification: (
+      //   int id,
+      //   String? title,
+      //   String? body,
+      //   String? payload,
+      // )
+      // async {
+      //   print('here is payload ---> $payload');
+      // }
+    );
 
     var initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
